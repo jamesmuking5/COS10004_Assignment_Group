@@ -6,6 +6,7 @@ from systems import (
     WaterFiltering,
     Lighting,
 )
+import random
 
 # Central Control Unit (CCC)
 # Use terminal as console?
@@ -27,64 +28,57 @@ class CCC:
             self.lighting,
         ]
 
-    def testSystems(self):
-        # Print all variables
+    # Randomise all variables
+    def randomiseVariables(self):
+        for system in self.all_systems:
+            for var in system.getVariables():
+                var.set_value(random.choice([True, False]))
+
+    # Print all variables state
+    def printVariables(self):
         for system in self.all_systems:
             print(f"\n*** {system.name} ***")
             for var in system.getVariables():
                 print(var)
-        # Change all variables to True
-        print("\n**************** Changing all variables to True ********************")
+
+    # Set all variables to True
+    def setVariablesTrue(self):
         for system in self.all_systems:
             for var in system.getVariables():
                 var.set_value(True)
-        # Print all variables
+
+    # Set all variables to False
+    def setVariablesFalse(self):
         for system in self.all_systems:
-            print(f"\n*** {system.name} ***")
             for var in system.getVariables():
-                print(var)
+                var.set_value(False)
 
-    # Test systems
-    def feedingTest(self):
-        for var in self.feeding.getVariables():
-            print(var)
+    # Test systems and variables
+    def testSystems(self):
+        # Print all variables
+        self.printVariables()
+        # Change all variables to True
+        self.setVariablesTrue()
+        # Print all variables
+        self.printVariables()
 
-    def testrun(self):
-        # Test run
-        print("Feeding System")
-        print("Feeder activated:", self.feeding.checkFeeder())
-        print("Alert activated:", self.feeding.checkAlert())
-        print("Feeder activated manually:", self.feeding.checkFeederManual())
-        print("Alert activated manually:", self.feeding.checkAlertManual())
-
-        # print("\nFish Health Monitoring System")
-        # print("Feeding response:", self.fish_health_monitoring.checkFeedingResponse())
-        # print(
-        #     "Water quality response:",
-        #     self.fish_health_monitoring.checkWaterQualityResponse(),
-        # )
-        # print(
-        #     "Environment control response:",
-        #     self.fish_health_monitoring.checkEnvironmentControlResponse(),
-        # )
-
-        # print("\nEnvironmental Control Monitoring System")
-        # print(
-        #     "Lighting response:",
-        #     self.environment_control_monitoring.checkLightingResponse(),
-        # )
-        # print(
-        #     "Water quality response:",
-        #     self.environment_control_monitoring.checkWaterQualityResponse(),
-        # )
-
-        # print("\nWater Filtering System")
-        # print("Water quality:", self.waterfiltering.checkWaterQuality())
-        # print(
-        #     "Water filter activated manually:",
-        #     self.waterfiltering.checkWaterFilterManual(),
-        # )
-
-        # print("\nLighting System")
-        # print("Lighting timer:", self.lighting.checkLightingTimer())
-        # print("Lighting activated manually:", self.lighting.checkLightingManual())
+    # Test check() and checkManual() methods
+    def testCheckMethods(self):
+        for systems in self.all_systems:
+            try:
+                print(f"\n*** {systems.name} ***")
+                print(f"check: {systems.check()}")
+            except AttributeError:
+                print(f"{systems.name} does not have check() method")
+            try:
+                print(f"checkManual: {systems.checkManual()}")
+            except AttributeError:
+                print(f"{systems.name} does not have checkManual()method")
+            try:
+                print(f"checkAlert: {systems.checkAlert()}")
+            except AttributeError:
+                print(f"{systems.name} does not have checkAlert() method")
+            try:
+                print(f"checkAlertManual: {systems.checkAlertManual()}")
+            except AttributeError:
+                print(f"{systems.name} does not have checkAlertManual() method")

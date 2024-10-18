@@ -23,7 +23,8 @@ class Feeding(BaseSystem):
             [self.timer, self.water_quality, self.food_level, self.manual_switch]
         )
 
-    def checkFeeder(self):
+    # check = output
+    def check(self):
         """
         Feeding System\n
         O = TWF\n
@@ -47,7 +48,7 @@ class Feeding(BaseSystem):
         """
         return not self.food_level.get_value()
 
-    def checkFeederManual(self):
+    def checkManual(self):
         """
         O = S + (TWF)\n
         Checks if the feeder is activated manually.
@@ -161,7 +162,7 @@ class WaterFiltering(BaseSystem):
         self.manual_switch = Variable("manual_switch", False)
         self.variables.extend([self.turbidity, self.pressure, self.manual_switch])
 
-    def checkFilterPumpControl(self):
+    def check(self):
         """
         Water Filtering System\n
         O = TP'\n
@@ -172,7 +173,7 @@ class WaterFiltering(BaseSystem):
         """
         return self.turbidity.get_value() and not self.pressure.get_value()
 
-    def checkFilterPumpManual(self):
+    def checkManual(self):
         """
         O = S + (TP')\n
         Checks if the filter pump is activated manually.
@@ -194,7 +195,7 @@ class Lighting(BaseSystem):
             [self.timer, self.ambient_light_level, self.manual_switch]
         )
 
-    def checkLightControl(self):
+    def check(self):
         """
         Lighting System\n
         O = T + A'\n
@@ -205,7 +206,7 @@ class Lighting(BaseSystem):
         """
         return self.timer.get_value() or not self.ambient_light_level.get_value()
 
-    def checkLightManual(self):
+    def checkManual(self):
         """
         O = S + (T + A')\n
         Checks if the light is activated manually.
