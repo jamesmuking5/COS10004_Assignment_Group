@@ -33,7 +33,6 @@ class CCC:
             print(f"\n*** {system.name} ***")
             for var in system.getVariables():
                 print(var)
-            print(system.checkAlert())
         # Change all variables to True
         print("\n**************** Changing all variables to True ********************")
         for system in self.all_systems:
