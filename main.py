@@ -112,6 +112,7 @@ while True:
             while True:
                 clear_screen()
                 print("********* System Variables Menu *********")
+                print("*** manual_switch cannot be set here ***")
                 print("1. View current system variables")
                 print("2. Set all variables to True")
                 print("3. Set all variables to False")
