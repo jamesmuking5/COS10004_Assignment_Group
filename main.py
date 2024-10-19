@@ -9,10 +9,10 @@ ccc = CCC()
 def printBanner():
     print("Welcome to the Central Control Unit (CCC)!")
     print("********** Main Menu ***********")
-    print("1. Toggle manual switch")
+    print("1. Toggle Manual Switch")
     print("2. Run Multiplexer (Mux)")
-    print("3. Set system variables")
-    print("4. Exit")
+    print("3. Set System Variables")
+    print("4. End Program")
 
 
 def printSystems():
@@ -35,11 +35,11 @@ def mux_menu(manual=True):
             clear_screen()
             try:
                 print("********* Multiplexer (Mux) Menu *********")
-                print(" Manual Switch included in the systems input")
-                s0 = int(input("Enter s0: "))
-                s1 = int(input("Enter s1: "))
-                s2 = int(input("Enter s2: "))
-                print(f"Output: {ccc.runMuxManual(s0, s1, s2)}")
+                print(" Manual Switch included")
+                s1 = int(input("Enter S1 (0 or 1): "))
+                s2 = int(input("Enter S2 (0 or 1): "))
+                s3 = int(input("Enter S3 (0 or 1): "))
+                print(f"Output: {ccc.runMuxManual(s1, s2, s3)}")
             except IndexError as e:
                 print("Invalid Input: ", e)
             except ValueError as e:
@@ -52,16 +52,16 @@ def mux_menu(manual=True):
             clear_screen()
             try:
                 print("********* Multiplexer (Mux) Menu *********")
-                print(" Manual Switch not included in the systems input")
-                s0 = int(input("Enter s0: "))
-                s1 = int(input("Enter s1: "))
-                s2 = int(input("Enter s2: "))
-                print(f"Output: {ccc.runMux(s0, s1, s2)}")
+                print(" Manual Switch not included")
+                s1 = int(input("Enter S1 (0 or 1): "))
+                s2 = int(input("Enter S2 (0 or 1): "))
+                s3 = int(input("Enter S3 (0 or 1): "))
+                print(f"Output: {ccc.runMux(s1, s2, s3)}")
             except IndexError as e:
                 print("Invalid Input: ", e)
             except ValueError as e:
                 print("Invalid Input: ", e)
-            continue_choice = input("Continue? (y/n): ")
+            continue_choice = input("Continue? (Y/N): ")
             if continue_choice.lower() != "y":
                 break
 
@@ -71,12 +71,12 @@ while True:
     clear_screen()
     printBanner()
     try:
-        choice = int(input("Enter choice: "))
+        choice = int(input("Enter Choice: "))
         if choice == 1:
             clear_screen()
             printSystems()
             print("6. Exit")
-            index = int(input("Enter system index to toggle: "))
+            index = int(input("Enter System Index to Toggle: "))
             if index == 6:
                 continue
             ccc.setManualSwitch(index)
@@ -87,11 +87,11 @@ while True:
             while True:
                 clear_screen()
                 print("********* Multiplexer (Mux) Menu *********")
-                print("Include manual switch in the systems input?")
+                print("Include Manual Switch in the Systems Input?")
                 print("1. Yes")
                 print("2. No")
-                print("3. Exit")
-                choice = int(input("Enter choice: "))
+                print("3. Exit to Main Menu")
+                choice = int(input("Enter Choice: "))
                 if choice == 1:
                     mux_menu(True)
                 elif choice == 2:
@@ -99,19 +99,19 @@ while True:
                 elif choice == 3:
                     break
                 else:
-                    print("Invalid choice!")
+                    print("Invalid Choice!")
                     input()
         elif choice == 3:
             while True:
                 clear_screen()
                 print("********* System Variables Menu *********")
-                print("*** manual_switch cannot be set here ***")
-                print("1. View current system variables")
-                print("2. Set all variables to True")
-                print("3. Set all variables to False")
-                print("4. Randomise all variables")
-                print("5. Exit to main menu")
-                choice = int(input("Enter choice: "))
+                print("*** Manual Switch cannot be set here ***")
+                print("1. View current System Variables")
+                print("2. Set all Variables to True")
+                print("3. Set all Variables to False")
+                print("4. Randomise all Variables")
+                print("5. Exit to Main Menu")
+                choice = int(input("Enter Choice: "))
                 if choice == 1:
                     clear_screen()
                     ccc.printVariables()
@@ -126,10 +126,10 @@ while True:
                 elif choice == 5:
                     break  # Exit the loop
                 else:
-                    print("Invalid choice!")
+                    print("Invalid Choice!")
         elif choice == 4:
             break  # Exit the program
         else:
-            print("Invalid choice!")
+            print("Invalid Choice!")
     except Exception as e:
         print("Error:", e)
