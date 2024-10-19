@@ -49,16 +49,22 @@ class CCC:
 
     # Mux selection and return output
     def runMux(self, s1, s2, s3):
+        # If s1, s2, s3 are not 0 or 1, raise an error
+        if s1 not in [0, 1] or s2 not in [0, 1] or s3 not in [0, 1]:
+            raise ValueError("s1, s2, s3 must be 0 or 1")
         input = (s1 << 2) | (s2 << 1) | s3
         if input >= 6:
-            raise IndexError("D6 and D7 are not available")
+            raise IndexError("D0 - D5 only")
         return self.system_outputs[input]
 
     # Mux selection and return output for manual switch
     def runMuxManual(self, s1, s2, s3):
+        # If s1, s2, s3 are not 0 or 1, raise an error
+        if s1 not in [0, 1] or s2 not in [0, 1] or s3 not in [0, 1]:
+            raise ValueError("s1, s2, s3 must be 0 or 1")
         input = (s1 << 2) | (s2 << 1) | s3
         if input >= 6:
-            raise IndexError("D6 and D7 are not available")
+            raise IndexError("D0 - D5 only")
         return self.system_outputs_manual[input]
 
     # Toggle manual_switch for chosen system

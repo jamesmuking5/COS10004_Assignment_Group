@@ -36,6 +36,43 @@ def clear_screen():
         os.system("clear")
 
 
+def mux_menu(manual=True):
+    if manual:
+        while True:
+            clear_screen()
+            try:
+                print("********* Multiplexer (Mux) Menu *********")
+                print(" Manual Switch included in the systems input")
+                s1 = int(input("Enter s1: "))
+                s2 = int(input("Enter s2: "))
+                s3 = int(input("Enter s3: "))
+                print(f"Output: {ccc.runMuxManual(s1, s2, s3)}")
+            except IndexError as e:
+                print("Invalid Input: ", e)
+            except ValueError as e:
+                print("Invalid Input: ", e)
+            continue_choice = input("Continue? (y/n): ")
+            if continue_choice.lower() != "y":
+                break  # Exit the loop
+    else:
+        while True:
+            clear_screen()
+            try:
+                print("********* Multiplexer (Mux) Menu *********")
+                print(" Manual Switch not included in the systems input")
+                s1 = int(input("Enter s1: "))
+                s2 = int(input("Enter s2: "))
+                s3 = int(input("Enter s3: "))
+                print(f"Output: {ccc.runMux(s1, s2, s3)}")
+            except IndexError as e:
+                print("Invalid Input: ", e)
+            except ValueError as e:
+                print("Invalid Input: ", e)
+            continue_choice = input("Continue? (y/n): ")
+            if continue_choice.lower() != "y":
+                break
+
+
 # Main loop
 while True:
     clear_screen()
@@ -56,17 +93,21 @@ while True:
         elif choice == 2:
             while True:
                 clear_screen()
-                try:
-                    print("********* Multiplexer (Mux) Menu *********")
-                    s1 = int(input("Enter s1: "))
-                    s2 = int(input("Enter s2: "))
-                    s3 = int(input("Enter s3: "))
-                    print(f"Output: {ccc.runMux(s1, s2, s3)}")
-                except IndexError as e:
-                    print("Invalid Input: ", e)
-                continue_choice = input("Continue? (y/n): ")
-                if continue_choice.lower() != "y":
-                    break  # Exit the loop
+                print("********* Multiplexer (Mux) Menu *********")
+                print("Include manual switch in the systems input?")
+                print("1. Yes")
+                print("2. No")
+                print("3. Exit")
+                choice = int(input("Enter choice: "))
+                if choice == 1:
+                    mux_menu(True)
+                elif choice == 2:
+                    mux_menu(False)
+                elif choice == 3:
+                    break
+                else:
+                    print("Invalid choice!")
+                    input()
         elif choice == 3:
             while True:
                 clear_screen()
