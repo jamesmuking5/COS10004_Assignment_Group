@@ -73,16 +73,17 @@ while True:
     try:
         choice = int(input("Enter Choice: "))
         if choice == 1:
-            clear_screen()
-            printSystems()
-            print("6. Exit")
-            index = int(input("Enter System Index to Toggle: "))
-            if index == 6:
-                continue
-            ccc.setManualSwitch(index)
-            clear_screen()
-            ccc.printManualSwitches()
-            input()
+            while True:
+                clear_screen()
+                ccc.printManualSwitches()
+                switch_index = int(input("Enter System Index to Toggle (0 to exit): "))
+                if switch_index < 0 or switch_index > 5:
+                    print("Invalid Index!")
+                    input()
+                    continue
+                if switch_index == 0:
+                    break
+                ccc.setManualSwitch(switch_index)
         elif choice == 2:
             while True:
                 clear_screen()
