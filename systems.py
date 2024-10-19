@@ -11,7 +11,7 @@ class BaseSystem:
         return self.variables
 
 
-# 2.1 Feeding
+# 2.1 Feeding (D0 - D1)
 class Feeding(BaseSystem):
     def __init__(self):
         super().__init__()
@@ -69,7 +69,7 @@ class Feeding(BaseSystem):
         return self.manual_switch.get_value() or self.checkAlert()
 
 
-# 2.2 Fish Health Monitoring
+# 2.2 Fish Health Monitoring (D2)
 class FishHealthMonitoring(BaseSystem):
     def __init__(self):
         super().__init__()
@@ -115,7 +115,7 @@ class FishHealthMonitoring(BaseSystem):
         return self.manual_switch.get_value() or self.checkAlert()
 
 
-# 2.3 Environmental Control Monitoring
+# 2.3 Environmental Control Monitoring (D3)
 class EnvironmentalControlMonitoring(BaseSystem):
     def __init__(self):
         super().__init__()
@@ -153,7 +153,7 @@ class EnvironmentalControlMonitoring(BaseSystem):
         return self.manual_switch.get_value() or self.checkAlert()
 
 
-# 2.4 Water Filtering
+# 2.4 Water Filtering (D4)
 class WaterFiltering(BaseSystem):
     def __init__(self):
         super().__init__()
@@ -184,7 +184,7 @@ class WaterFiltering(BaseSystem):
         return self.manual_switch.get_value() or self.checkFilterPumpControl()
 
 
-# 2.5 Lighting
+# 2.5 Lighting (D5)
 class Lighting(BaseSystem):
     def __init__(self):
         super().__init__()
@@ -215,3 +215,6 @@ class Lighting(BaseSystem):
             bool: True if the light is activated manually, False otherwise.
         """
         return self.manual_switch.get_value() or self.checkLightControl()
+
+
+# Free (D6-D7)

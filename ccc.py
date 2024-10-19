@@ -27,19 +27,46 @@ class CCC:
             self.waterfiltering,
             self.lighting,
         ]
+        # 8-bit control byte
+        self.control_byte = 0b00000000
 
-    # Randomise all variables
-    def randomiseVariables(self):
-        for system in self.all_systems:
-            for var in system.getVariables():
-                var.set_value(random.choice([True, False]))
+    # Update control byte
 
     # Print all variables state
     def printVariables(self):
+        print(self.control_byte)
         for system in self.all_systems:
             print(f"\n*** {system.name} ***")
             for var in system.getVariables():
                 print(var)
+
+    # Print all check methods
+    def printChecks(self):
+        for system in self.all_systems:
+            try:
+                print(f"\n*** {system.name} ***")
+            except AttributeError:
+                pass
+
+            try:
+                print(f"check: {system.check()}")
+            except AttributeError:
+                pass
+
+            try:
+                print(f"checkManual: {system.checkManual()}")
+            except AttributeError:
+                pass
+
+            try:
+                print(f"checkAlert: {system.checkAlert()}")
+            except AttributeError:
+                pass
+
+            try:
+                print(f"checkAlertManual: {system.checkAlertManual()}")
+            except AttributeError:
+                pass
 
     # Set all variables to True
     def setVariablesTrue(self):
@@ -53,13 +80,23 @@ class CCC:
             for var in system.getVariables():
                 var.set_value(False)
 
+    # Randomise all variables
+    def randomiseVariables(self):
+        for system in self.all_systems:
+            for var in system.getVariables():
+                var.set_value(random.choice([True, False]))
+
     # Test systems and variables
     def testSystems(self):
-        # Print all variables
         self.printVariables()
         # Change all variables to True
         self.setVariablesTrue()
-        # Print all variables
+        self.printVariables()
+        # Change all variables to False
+        self.setVariablesFalse()
+        self.printVariables()
+        # Randomise all variables
+        self.randomiseVariables()
         self.printVariables()
 
     # Test check() and checkManual() methods

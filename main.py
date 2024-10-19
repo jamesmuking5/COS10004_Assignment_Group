@@ -3,7 +3,7 @@ from ccc import CCC
 
 ccc = CCC()
 
-ccc.randomiseVariables()
-
-ccc.testSystems()
+# ccc.printVariables()
+# ccc.testSystems()
+ccc.printChecks()
 # ccc.testCheckMethods()
