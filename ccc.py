@@ -30,11 +30,11 @@ class CCC:
         ]
 
     # Mux selection and return output
-    def runMux(self, s1, s2, s3):
+    def runMux(self, s0, s1, s2):
         # Validate input
-        if s1 not in [0, 1] or s2 not in [0, 1] or s3 not in [0, 1]:
+        if s0 not in [0, 1] or s1 not in [0, 1] or s2 not in [0, 1]:
             raise ValueError("s1, s2, s3 must be 0 or 1")
-        muxInput = (s1 << 2) | (s2 << 1) | s3
+        muxInput = (s0 << 2) | (s1 << 1) | s2
         if muxInput >= 6:
             raise IndexError("Only D0 to D5 are available")
         # Recompute system outputs
@@ -49,11 +49,11 @@ class CCC:
         return system_outputs[muxInput]
 
     # Mux selection and return output for manual switch
-    def runMuxManual(self, s1, s2, s3):
+    def runMuxManual(self, s0, s1, s2):
         # Validate input
-        if s1 not in [0, 1] or s2 not in [0, 1] or s3 not in [0, 1]:
+        if s0 not in [0, 1] or s1 not in [0, 1] or s2 not in [0, 1]:
             raise ValueError("s1, s2, s3 must be 0 or 1")
-        muxInput = (s1 << 2) | (s2 << 1) | s3
+        muxInput = (s0 << 2) | (s1 << 1) | s2
         if muxInput >= 6:
             raise IndexError("Only D0 to D5 are available")
         # Recompute system outputs

@@ -36,10 +36,10 @@ def mux_menu(manual=True):
             try:
                 print("********* Multiplexer (Mux) Menu *********")
                 print(" Manual Switch included in the systems input")
+                s0 = int(input("Enter s0: "))
                 s1 = int(input("Enter s1: "))
                 s2 = int(input("Enter s2: "))
-                s3 = int(input("Enter s3: "))
-                print(f"Output: {ccc.runMuxManual(s1, s2, s3)}")
+                print(f"Output: {ccc.runMuxManual(s0, s1, s2)}")
             except IndexError as e:
                 print("Invalid Input: ", e)
             except ValueError as e:
@@ -53,10 +53,10 @@ def mux_menu(manual=True):
             try:
                 print("********* Multiplexer (Mux) Menu *********")
                 print(" Manual Switch not included in the systems input")
+                s0 = int(input("Enter s0: "))
                 s1 = int(input("Enter s1: "))
                 s2 = int(input("Enter s2: "))
-                s3 = int(input("Enter s3: "))
-                print(f"Output: {ccc.runMux(s1, s2, s3)}")
+                print(f"Output: {ccc.runMux(s0, s1, s2)}")
             except IndexError as e:
                 print("Invalid Input: ", e)
             except ValueError as e:
