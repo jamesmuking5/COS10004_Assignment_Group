@@ -7,6 +7,7 @@ from systems import (
     Lighting,
 )
 import random
+from colorama import init, Fore, Style
 
 # Central Control Unit (CCC)
 # Use terminal as console?
@@ -85,14 +86,24 @@ class CCC:
     def printManualSwitches(self):
         print("Manual Switches Status:")
         for system in self.all_systems:
-            print(f"{system.name.ljust(40)} = {system.manual_switch.get_value()}")
+            name_color = Fore.YELLOW
+            value_color = Fore.GREEN if system.manual_switch.get_value() else Fore.RED
+            print(
+                f"{name_color}{system.name.ljust(40)}{Style.RESET_ALL} = {value_color}{system.manual_switch.get_value()}{Style.RESET_ALL}"
+            )
 
-    # Print all variables state
     def printVariables(self):
         for system in self.all_systems:
             print(f"\n*** {system.name} ***")
             for var in system.getVariables():
-                print(f"{var.name.ljust(25)} = {var.value}")
+                if var.name == "manual_switch":
+                    color = Fore.YELLOW  # Orange (Yellow in colorama)
+                else:
+                    color = Fore.CYAN
+                value_color = Fore.GREEN if var.value else Fore.RED
+                print(
+                    f"{color}{var.name.ljust(25)}{Style.RESET_ALL} = {value_color}{var.value}{Style.RESET_ALL}"
+                )
 
     # Set all variables to True except manual_switch
     def setVariablesTrue(self):
