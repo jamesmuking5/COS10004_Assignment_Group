@@ -6,13 +6,6 @@ from ccc import CCC
 ccc = CCC()
 
 
-# Init tests
-# try:
-#     ccc.randomiseVariables()
-# except Exception as e:
-#     print("Error:", e)
-
-
 def printBanner():
     print("Welcome to the Central Control Unit (CCC)!")
     print("********** Main Menu ***********")
