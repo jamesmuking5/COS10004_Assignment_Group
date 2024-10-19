@@ -5,7 +5,7 @@ from variable import Variable
 class BaseSystem:
     def __init__(self):
         self.name = self.__class__.__name__ + " System"
-        self.manual_switch = Variable("manual_switch", False)
+        self.manual_switch = Variable("manual_switch", True)
         self.variables = []
 
     def getVariables(self):
@@ -24,49 +24,39 @@ class Feeding(BaseSystem):
         )
 
     # check = output
-    def check(self):
+    def check(self, manual=False):
         """
         Feeding System\n
-        O = TWF\n
+        not manual: O = TWF\n
+        manual: O = S + (TWF)\n
         Checks if the feeder is activated.
         Returns:
             bool: True if the feeder is activated, False otherwise.
         """
-        return (
+        output = (
             self.timer.get_value()
             and self.water_quality.get_value()
             and self.food_level.get_value()
         )
+        if not manual:
+            return output
+        else:
+            return self.manual_switch.get_value() or output
 
-    def checkAlert(self):
+    def checkAlert(self, manual=False):
         """
-        O = F'\n
+        not manual: O = F'\n
+        manual: O = S + F'\n
         Checks if the alert is activated.
 
         Returns:
             bool: True if the alert is activated, False otherwise.
         """
-        return not self.food_level.get_value()
-
-    def checkManual(self):
-        """
-        O = S + (TWF)\n
-        Checks if the feeder is activated manually.
-
-        Returns:
-            bool: True if the feeder is activated manually, False otherwise.
-        """
-        return self.manual_switch.get_value() or self.check()
-
-    def checkAlertManual(self):
-        """
-        O = S + F'\n
-        Checks if the alert is activated manually.
-
-        Returns:
-            bool: True if the alert is activated manually, False otherwise.
-        """
-        return self.manual_switch.get_value() or self.checkAlert()
+        output = not self.food_level.get_value()
+        if not manual:
+            return output
+        else:
+            return self.manual_switch.get_value() or output
 
 
 # 2.2 Fish Health Monitoring (D2)

@@ -39,7 +39,7 @@ class CCC:
             for var in system.getVariables():
                 print(var)
 
-    # Print all check methods
+    # Print all available check methods for all systems
     def printChecks(self):
         for system in self.all_systems:
             try:
@@ -67,23 +67,26 @@ class CCC:
             except AttributeError:
                 pass
 
-    # Set all variables to True
+    # Set all variables to True except manual_switch
     def setVariablesTrue(self):
         for system in self.all_systems:
             for var in system.getVariables():
-                var.set_value(True)
+                if var.name != "manual_switch":
+                    var.set_value(True)
 
-    # Set all variables to False
+    # Set all variables to False except manual_switch
     def setVariablesFalse(self):
         for system in self.all_systems:
             for var in system.getVariables():
-                var.set_value(False)
+                if var.name != "manual_switch":
+                    var.set_value(False)
 
-    # Randomise all variables
+    # Randomise all variables except manual_switch
     def randomiseVariables(self):
         for system in self.all_systems:
             for var in system.getVariables():
-                var.set_value(random.choice([True, False]))
+                if var.name != "manual_switch":
+                    var.set_value(random.choice([True, False]))
 
     # Test systems and variables
     def testSystems(self):
