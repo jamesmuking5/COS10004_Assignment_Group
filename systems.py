@@ -77,31 +77,26 @@ class FishHealthMonitoring(BaseSystem):
             ]
         )
 
-    def checkAlert(self):
+    def checkAlert(self, manual=False):
         """
         Fish Health Monitoring System\n
-        O = A'+B'+C'+D'\n
+        not manual: O = A'+B'+C'+D'\n
+        manual: O = S + (A'+B'+C'+D')\n
         Checks if the health alert is activated.
 
         Returns:
             bool: True if the health alert is activated, False otherwise.
         """
-        return not (
+        output = not (
             self.feeding_response.get_value()
             and self.fish_activity_level.get_value()
             and self.bio_sensors.get_value()
             and self.fish_behavioural_patterns.get_value()
         )
-
-    def checkAlertManual(self):
-        """
-        O = S + (A'+B'+C'+D')\n
-        Checks if the health alert is activated manually.
-
-        Returns:
-            bool: True if the health alert is activated manually, False otherwise.
-        """
-        return self.manual_switch.get_value() or self.checkAlert()
+        if not manual:
+            return output
+        else:
+            return self.manual_switch.get_value() or output
 
 
 # 2.3 Environmental Control Monitoring (D3)
@@ -115,30 +110,25 @@ class EnvironmentalControlMonitoring(BaseSystem):
             [self.pH, self.dissolved_oxygen, self.temperature, self.manual_switch]
         )
 
-    def checkAlert(self):
+    def checkAlert(self, manual=False):
         """
         Environmental Control Monitoring System\n
-        O = P + D + T\n
+        not manual: O = P + D + T\n
+        manual: O = S + (P + D + T)\n
         Checks if the alert is activated.
 
         Returns:
             bool: True if the alert is activated, False otherwise.
         """
-        return (
+        output = (
             self.pH.get_value()
             or self.dissolved_oxygen.get_value()
             or self.temperature.get_value()
         )
-
-    def checkAlertManual(self):
-        """
-        O = S + (P + D + T)\n
-        Checks if the alert is activated manually.
-
-        Returns:
-            bool: True if the alert is activated manually, False otherwise.
-        """
-        return self.manual_switch.get_value() or self.checkAlert()
+        if not manual:
+            return output
+        else:
+            return self.manual_switch.get_value() or output
 
 
 # 2.4 Water Filtering (D4)
@@ -149,26 +139,21 @@ class WaterFiltering(BaseSystem):
         self.pressure = Variable("pressure", False)
         self.variables.extend([self.turbidity, self.pressure, self.manual_switch])
 
-    def check(self):
+    def check(self, manual=False):
         """
         Water Filtering System\n
-        O = TP'\n
+        not manual: O = TP'\n
+        manual: O = S + (TP')\n
         Checks if the filter is activated.
 
         Returns:
             bool: True if the filter is activated, False otherwise.
         """
-        return self.turbidity.get_value() and not self.pressure.get_value()
-
-    def checkManual(self):
-        """
-        O = S + (TP')\n
-        Checks if the filter pump is activated manually.
-
-        Returns:
-            bool: True if the filter pump is activated manually, False otherwise.
-        """
-        return self.manual_switch.get_value() or self.check()
+        output = self.turbidity.get_value() and not self.pressure.get_value()
+        if not manual:
+            return output
+        else:
+            return self.manual_switch.get_value() or output
 
 
 # 2.5 Lighting (D5)
@@ -181,26 +166,21 @@ class Lighting(BaseSystem):
             [self.timer, self.ambient_light_level, self.manual_switch]
         )
 
-    def check(self):
+    def check(self, manual=False):
         """
         Lighting System\n
-        O = T + A'\n
+        not manual: O = T + A'\n
+        manual: O = S + (T + A')\n
         Checks if the light is activated.
 
         Returns:
             bool: True if the light is activated, False otherwise.
         """
-        return self.timer.get_value() or not self.ambient_light_level.get_value()
-
-    def checkManual(self):
-        """
-        O = S + (T + A')\n
-        Checks if the light is activated manually.
-
-        Returns:
-            bool: True if the light is activated manually, False otherwise.
-        """
-        return self.manual_switch.get_value() or self.check()
+        output = self.timer.get_value() or not self.ambient_light_level.get_value()
+        if not manual:
+            return output
+        else:
+            return self.manual_switch.get_value() or output
 
 
 # Free (D6-D7)
