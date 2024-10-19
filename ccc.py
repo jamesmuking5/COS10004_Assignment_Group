@@ -27,14 +27,13 @@ class CCC:
             self.waterfiltering,
             self.lighting,
         ]
-        # 8-bit control byte
-        self.control_byte = 0b00000000
-
-    # Update control byte
+        self.all_systems_inputs = [
+            self.feeding.check() | self.feeding.checkManual(),
+            self.feeding.checkAlert(),
+        ]
 
     # Print all variables state
     def printVariables(self):
-        print(self.control_byte)
         for system in self.all_systems:
             print(f"\n*** {system.name} ***")
             for var in system.getVariables():

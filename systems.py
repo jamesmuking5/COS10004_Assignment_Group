@@ -5,6 +5,7 @@ from variable import Variable
 class BaseSystem:
     def __init__(self):
         self.name = self.__class__.__name__ + " System"
+        self.manual_switch = Variable("manual_switch", False)
         self.variables = []
 
     def getVariables(self):
@@ -18,7 +19,6 @@ class Feeding(BaseSystem):
         self.timer = Variable("timer", False)
         self.water_quality = Variable("water_quality", False)
         self.food_level = Variable("food_level", False)
-        self.manual_switch = Variable("manual_switch", False)
         self.variables.extend(
             [self.timer, self.water_quality, self.food_level, self.manual_switch]
         )
@@ -56,7 +56,7 @@ class Feeding(BaseSystem):
         Returns:
             bool: True if the feeder is activated manually, False otherwise.
         """
-        return self.manual_switch.get_value() or self.checkFeeder()
+        return self.manual_switch.get_value() or self.check()
 
     def checkAlertManual(self):
         """
@@ -77,7 +77,6 @@ class FishHealthMonitoring(BaseSystem):
         self.fish_activity_level = Variable("fish_activity_level", False)
         self.bio_sensors = Variable("bio_sensors", False)
         self.fish_behavioural_patterns = Variable("fish_behavioural_patterns", False)
-        self.manual_switch = Variable("manual_switch", False)
         self.variables.extend(
             [
                 self.feeding_response,
@@ -122,7 +121,6 @@ class EnvironmentalControlMonitoring(BaseSystem):
         self.pH = Variable("pH", False)
         self.dissolved_oxygen = Variable("dissolved_oxygen", False)
         self.temperature = Variable("temperature", False)
-        self.manual_switch = Variable("manual_switch", False)
         self.variables.extend(
             [self.pH, self.dissolved_oxygen, self.temperature, self.manual_switch]
         )
@@ -159,17 +157,16 @@ class WaterFiltering(BaseSystem):
         super().__init__()
         self.turbidity = Variable("turbidity", False)
         self.pressure = Variable("pressure", False)
-        self.manual_switch = Variable("manual_switch", False)
         self.variables.extend([self.turbidity, self.pressure, self.manual_switch])
 
     def check(self):
         """
         Water Filtering System\n
         O = TP'\n
-        Checks if the filter pump is activated.
+        Checks if the filter is activated.
 
         Returns:
-            bool: True if the filter pump is activated, False otherwise.
+            bool: True if the filter is activated, False otherwise.
         """
         return self.turbidity.get_value() and not self.pressure.get_value()
 
@@ -181,7 +178,7 @@ class WaterFiltering(BaseSystem):
         Returns:
             bool: True if the filter pump is activated manually, False otherwise.
         """
-        return self.manual_switch.get_value() or self.checkFilterPumpControl()
+        return self.manual_switch.get_value() or self.check()
 
 
 # 2.5 Lighting (D5)
@@ -190,7 +187,6 @@ class Lighting(BaseSystem):
         super().__init__()
         self.timer = Variable("timer", False)
         self.ambient_light_level = Variable("ambient_light_level", False)
-        self.manual_switch = Variable("manual_switch", False)
         self.variables.extend(
             [self.timer, self.ambient_light_level, self.manual_switch]
         )
@@ -214,7 +210,7 @@ class Lighting(BaseSystem):
         Returns:
             bool: True if the light is activated manually, False otherwise.
         """
-        return self.manual_switch.get_value() or self.checkLightControl()
+        return self.manual_switch.get_value() or self.check()
 
 
 # Free (D6-D7)
