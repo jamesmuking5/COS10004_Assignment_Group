@@ -27,10 +27,10 @@ class CCC:
             self.waterfiltering,
             self.lighting,
         ]
-        self.all_systems_inputs = [
-            self.feeding.check() | self.feeding.checkManual(),
-            self.feeding.checkAlert(),
-        ]
+        # self.all_systems_inputs = [
+        #     self.feeding.check(),
+        #     self.feeding.checkAlert(),
+        # ]
 
     # Print all variables state
     def printVariables(self):
@@ -53,7 +53,7 @@ class CCC:
                 pass
 
             try:
-                print(f"checkManual: {system.checkManual()}")
+                print(f"checkManual: {system.check(manual=True)}")
             except AttributeError:
                 pass
 
@@ -63,7 +63,7 @@ class CCC:
                 pass
 
             try:
-                print(f"checkAlertManual: {system.checkAlertManual()}")
+                print(f"checkAlertManual: {system.checkAlert(manual=True)}")
             except AttributeError:
                 pass
 
@@ -110,14 +110,14 @@ class CCC:
             except AttributeError:
                 print(f"{systems.name} does not have check() method")
             try:
-                print(f"checkManual: {systems.checkManual()}")
+                print(f"checkManual: {systems.check(manual=True)}")
             except AttributeError:
-                print(f"{systems.name} does not have checkManual()method")
+                print(f"{systems.name} does not have check(manual=True)method")
             try:
                 print(f"checkAlert: {systems.checkAlert()}")
             except AttributeError:
                 print(f"{systems.name} does not have checkAlert() method")
             try:
-                print(f"checkAlertManual: {systems.checkAlertManual()}")
+                print(f"checkAlertManual: {systems.checkAlert(manual=True)}")
             except AttributeError:
-                print(f"{systems.name} does not have checkAlertManual() method")
+                print(f"{systems.name} does not have checkAlert(manual=True) method")
