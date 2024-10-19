@@ -28,8 +28,17 @@ class CCC:
             self.waterfiltering,
             self.lighting,
         ]
-        # List of system outputs (Mux)
-        self.system_outputs = [
+
+    # Mux selection and return output
+    def runMux(self, s1, s2, s3):
+        # Validate input
+        if s1 not in [0, 1] or s2 not in [0, 1] or s3 not in [0, 1]:
+            raise ValueError("s1, s2, s3 must be 0 or 1")
+        muxInput = (s1 << 2) | (s2 << 1) | s3
+        if muxInput >= 6:
+            raise IndexError("Only D0 to D5 are available")
+        # Recompute system outputs
+        system_outputs = [
             self.feeding.check(),  # d0
             self.feeding.checkAlert(),  # d1
             self.fish_health_monitoring.checkAlert(),  # d2
@@ -37,8 +46,18 @@ class CCC:
             self.waterfiltering.check(),  # d4
             self.lighting.check(),  # d5
         ]
-        # List of system outputs (Mux) for manual switch
-        self.system_outputs_manual = [
+        return system_outputs[muxInput]
+
+    # Mux selection and return output for manual switch
+    def runMuxManual(self, s1, s2, s3):
+        # Validate input
+        if s1 not in [0, 1] or s2 not in [0, 1] or s3 not in [0, 1]:
+            raise ValueError("s1, s2, s3 must be 0 or 1")
+        muxInput = (s1 << 2) | (s2 << 1) | s3
+        if muxInput >= 6:
+            raise IndexError("Only D0 to D5 are available")
+        # Recompute system outputs
+        system_outputs = [
             self.feeding.check(manual=True),  # d0
             self.feeding.checkAlert(manual=True),  # d1
             self.fish_health_monitoring.checkAlert(manual=True),  # d2
@@ -46,26 +65,7 @@ class CCC:
             self.waterfiltering.check(manual=True),  # d4
             self.lighting.check(manual=True),  # d5
         ]
-
-    # Mux selection and return output
-    def runMux(self, s1, s2, s3):
-        # If s1, s2, s3 are not 0 or 1, raise an error
-        if s1 not in [0, 1] or s2 not in [0, 1] or s3 not in [0, 1]:
-            raise ValueError("s1, s2, s3 must be 0 or 1")
-        input = (s1 << 2) | (s2 << 1) | s3
-        if input >= 6:
-            raise IndexError("D0 - D5 only")
-        return self.system_outputs[input]
-
-    # Mux selection and return output for manual switch
-    def runMuxManual(self, s1, s2, s3):
-        # If s1, s2, s3 are not 0 or 1, raise an error
-        if s1 not in [0, 1] or s2 not in [0, 1] or s3 not in [0, 1]:
-            raise ValueError("s1, s2, s3 must be 0 or 1")
-        input = (s1 << 2) | (s2 << 1) | s3
-        if input >= 6:
-            raise IndexError("D0 - D5 only")
-        return self.system_outputs_manual[input]
+        return system_outputs[muxInput]
 
     # Toggle manual_switch for chosen system
     def setManualSwitch(self, index):
